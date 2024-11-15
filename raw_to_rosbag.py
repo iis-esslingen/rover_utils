@@ -45,12 +45,12 @@ class SensorDataHandler():
             )
         ):
             try:
-                image = None 
-                
                 if is_grayscale_camera:
-                    image = cv2.imread(image_filepath, cv2.IMREAD_GRAYSCALE)  # Force grayscale for t265
+                    image = cv2.imread(image_filepath, cv2.IMREAD_GRAYSCALE)
                 elif is_depth:
-                    image = image.astype(numpy.uint16)
+                    image = cv2.imread(image_filepath, cv2.IMREAD_UNCHANGED)
+                    if image is not None:
+                        image = image.astype(numpy.uint16)
                 else:
                     image = cv2.imread(image_filepath, cv2.IMREAD_COLOR)
 
@@ -71,7 +71,7 @@ class SensorDataHandler():
                 break
             except Exception as e:
                 print(f"Failed to add data: {image_filepath}. Error: {e}")
-                continue
+                break
         
     def _get_unix_timestamp(self, filepath):
         filename = os.path.basename(filepath)
