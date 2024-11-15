@@ -71,7 +71,7 @@ class SensorDataHandler():
                 break
             except Exception as e:
                 print(f"Failed to add data: {image_filepath}. Error: {e}")
-                break
+                continue
         
     def _get_unix_timestamp(self, filepath):
         filename = os.path.basename(filepath)
